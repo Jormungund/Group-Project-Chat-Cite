@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Friends.css';
 import { connect } from 'react-redux';
 import { populateFriends, createAlertMessage } from '../../../redux/reducer';
-import FriendsPopup from './popup';
+import FriendsPopup from './FriendsPopup';
 import Popup from 'reactjs-popup';
 
 class Friends extends Component {
