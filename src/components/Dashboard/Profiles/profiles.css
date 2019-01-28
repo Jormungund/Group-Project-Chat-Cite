@@ -1,21 +1,15 @@
-.shush{
-    width: 100%;
+.Profiles {
+    overflow: auto;
     height: 100%;
 }
-.mainProfile {
-
-    width: 100%;
-    height: 100%;
-    overflow: auto
-}
-.profileImage {
+.Profiles .profileImage {
     width: 80px;
     height: 80px;
 }
-img {
+.Profiles img {
     width: 100%;
 }
-.profileHeader {
+.Profiles .profileHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,7 +20,7 @@ img {
     margin-bottom: 15px;
 }
 
-.profileSection1 {
+.Profiles .profileSection1 {
     display: flex;
     align-items: center;
     justify-content: space-evenly; 
@@ -34,7 +28,7 @@ img {
     height: 350px;
 }
 
-.about {
+.Profiles .about {
     width: 35%;
     height: 250px;
     border: 3px inset white;
@@ -45,29 +39,29 @@ img {
     overflow: auto;
 }
 
-.channels {
+.Profiles .channels {
     width: 100%;
     font-size: 20px;
     margin-left: 10px;
 }
 
-.Links {
+.Profiles .Links {
     color: white;
 }
 
-.Links:hover {
+.Profiles .Links:hover {
     color: rgb(190, 190, 190);
     text-decoration: none;
 }
 
-.profileSection2 {
+.Profiles .profileSection2 {
     display: flex;
     align-items: center;
     width: 100%;
     height: 325px;
 }
 
-.data {
+.Profiles .data {
     width: 80%;
     height: 250px;
     border: 3px inset white;

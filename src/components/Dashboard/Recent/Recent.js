@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './recent.css';
+import './Recent.css';
 import { createAlertMessage } from '../../../redux/reducer';
 
 class Recent extends Component {
-    // constructor() {
-    //     super();
-    //     this.divRef = React.createRef();
-    // }
-    // state = {
-    //     showDiv: 'none'
-    // }
-    // show() {
-    //     this.setState({showDiv: 'block'}, () => this.divRef.current.focus());
-        
-    // }
-    // hide() {
-    //     this.setState({showDiv: 'none'});
-    // }
     render(){
         return (
             <div className="Recent">

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import NavBar from './LeftNavBar/leftnavbar';
-import ChannelView from './ChannelView/channelview';
-import Recent from './Recent_Notifications/recent';
-import Profile from './Profiles/profiles';
-import Settings from './Settings/settings';
-import FriendUserBar from './FriendsBar_ChannelUsers/frienduserbar';
+import NavBar from './LeftNavBar/LeftNavBar';
+import ChannelView from './ChannelView/ChannelView';
+import Recent from './Recent/Recent';
+import Profile from './Profiles/Profiles';
+import Settings from './Settings/Settings';
+import FriendUserBar from './FriendsBar_ChannelUsers/FriendUserBar';
 import DirectMessage from './DirectMessage/DirectMessage';
 import { connect } from 'react-redux';
 import { createAlertMessage } from '../../redux/reducer';
-import './dashboard.css';
+import './Dashboard.css';
 import io from 'socket.io-client';
 let socket;
 

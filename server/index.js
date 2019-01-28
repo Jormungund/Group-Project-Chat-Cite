@@ -4,26 +4,20 @@ const session = require('express-session');
 const massive = require('massive');
 const app = express();
 const http = require('http').Server(app);
-const io = require('socket.io')(http, {pingTimeout: 15000, rejectUnauthorized: false});
-
-
+const io = require('socket.io')(http, { pingTimeout: 15000, rejectUnauthorized: false });
 require('dotenv').config();
-const { CONNECTION_STRING, SERVER_PORT, SECRET} = process.env
 
+const { CONNECTION_STRING, SERVER_PORT, SECRET } = process.env
 
-//Controllers 
-
-const Auth = require('./controllers/Auth')
-const Channel = require('./controllers/Channels')
-const Friend = require('./controllers/Friends')
-const DM = require('./controllers/DirectMessages')
-const Profile = require('./controllers/Profile')
-const Search = require('./controllers/Search')
+const ac = require('./controllers/authController')
+const cc = require('./controllers/channelController')
+const dmc = require('./controllers/dmController')
+const pc = require('./controllers/profileController')
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
-    console.log('db connected!')
-}) 
+    console.log('db connected')
+})
 
 app.use(express.static(`${__dirname}/../build`));
 
@@ -42,78 +36,37 @@ io.use((socket, next) => {
     sessionMiddleware(socket.request, socket.request.res, next);
 })
 
-
 //Auth
-    app.post('/auth/register', Auth.register)
-    // Login to account
-    app.post('/auth/login', Auth.login)
-    // // Logout of account
-    app.get('/auth/logout', Auth.logout)
-    // // Get account information
-    app.get('/auth/currentUser', Auth.getCurrentUser)
-    // // Update account information
-    app.put('/auth/update/:id', Auth.update)
 
-//Friend Management
-    // Send Friend Request
-    app.post('/api/friend/request', Friend.requestFriend)
-    // Get Friend Requests for user
-    app.get('/api/friend/getRequests', Friend.getRequests)
-    // Accept Friend Request
-    app.post('/api/friend/acceptRequest', Friend.acceptRequest)
-    // Get Friends for user
-    // app.get('/api/friend/getUserFriends', Friend.getUserFriends)
-    // Delete Friend (deactivate)
+app.post('/auth/register', ac.register)
+app.post('/auth/login', ac.login)
+app.get('/auth/logout', ac.logout)
+app.get('/auth/currentUser', ac.getCurrentUser)
+app.put('/auth/update/:id', ac.update)
+
 
 //Channel Actions
-    // Get all Channels
-    app.get('/api/channel/getChannels', Channel.getChannels);
 
-    app.get('/api/channel/all', Channel.getAllChannels)
-    // Get all subscribed channels for user
-    app.get('/api/channel/all/subscribed', Channel.getAllSubscribedChannels)
-    // Get all subscribed channels for user  and unseen message count
-    app.get('/api/channel/all/subscribed/message/count', Channel.getAllSubscribedChannelMessageCount)
-    // Create Channel
-    app.post('/api/channel/new', Channel.createChannel)
-    // Get Channel
-    app.get('/api/channel', Channel.getChannel)
-    // Get Channel and Messages
-    app.get('/api/channel/messages/:channel_name', Channel.getChannelWithMessages)
-    // Add Channel Message
-    app.post('/api/channel/message/new', Channel.createMessage)
-    // Follow Channel
-    app.post('/api/channel/follow/:channel_id', Channel.followChannel)
-    // Unfollow Channel
-    app.delete('/api/channel/unfollow/:channel_id', Channel.unfollowChannel)
-    // Edit Channel Message
-    // Delete Channel Message
-    // React to Channel Message
+app.get('/api/channel/getChannels', cc.getChannels);
 
 //Private Message Actions
-    app.get('/api/dm/getActiveDms', DM.getActiveDms)
-    app.delete('/api/dm/hideDm/:dmPartnerId', DM.hideDm);
 
-//Search
+app.get('/api/dm/getActiveDms', dmc.getActiveDms)
+app.delete('/api/dm/hideDm/:dmPartnerId', dmc.hideDm);
 
-//Profile
-    // Get profile
-    app.get('/api/profile/:id', Profile.getUserProfile)
-//Analytics
-
+app.get('/api/profile/:id', pc.getUserProfile)
 
 //Sockets
 
-const sfc = require('./socket_controllers/friendsController');
-const scc = require('./socket_controllers/channelController');
-const sdmc = require('./socket_controllers/directMessageController');
+const sfc = require('./socketControllers/friendsController');
+const scc = require('./socketControllers/channelController');
+const sdmc = require('./socketControllers/directMessageController');
 
 let connectedUsers = {};
 let clientLookupDictionary = {};
 
 io.on('connection', socket => {
 
-    // console.log('client connected');
     const db = app.get('db');
     if (socket.request.session.user) {
         connectedUsers[socket.request.session.user.id] = socket.id;
@@ -138,6 +91,7 @@ io.on('connection', socket => {
     socket.on('create new channel', newChannel => scc.createNewChannel(db, socket, io, newChannel));
     socket.on('react to message', (messageId, channelId, reactionName) => scc.reactToMessage(db, socket, io, messageId, channelId, reactionName));
 
+    //typing listeners
     socket.on('is typing', () => scc.isTyping(socket));
     socket.on('stopped typing', () => scc.stoppedTyping(socket));
 
@@ -149,7 +103,6 @@ io.on('connection', socket => {
 
 
     socket.on('disconnect', () => {
-        // console.log('user disconnecting: ', clientLookupDictionary[socket.id]);
         if (socket.request.session.user) {
             sfc.goingOffline(db, io, connectedUsers, socket.request.session.user.id);
             if (socket.request.session.currentRoom) {

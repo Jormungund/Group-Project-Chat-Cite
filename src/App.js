@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import Landing from './components/Landing/landing';
-import Dashboard from './components/Dashboard/dashboard';
+import Landing from './components/Landing/Landing';
+import Dashboard from './components/Dashboard/Dashboard';
 import UserAlert from './components/UserAlert/UserAlert';
 import { connect } from 'react-redux';
 import { userLoggedIn } from './redux/reducer';
@@ -15,7 +15,6 @@ class App extends Component {
                 this.props.userLoggedIn(res.data);
         })
     }
-
     render() {
         const currentKey = this.props.user.username ? this.props.user.username : 'guest';
         return (

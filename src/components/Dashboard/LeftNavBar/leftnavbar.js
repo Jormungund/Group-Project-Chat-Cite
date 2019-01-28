@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import "./leftnavbar.css";
+import "./LeftNavBar.css";
 import { connect } from 'react-redux';
 import { userLoggedOut, populateActiveDms, createAlertMessage } from '../../../redux/reducer';
 import axios from 'axios';
@@ -76,7 +76,6 @@ class NavBar extends Component {
             this.setState({subbedChannels});
         });
     }
-
     componentDidMount() {
         axios.get('/api/channel/getChannels').then(res => {
             let channels = res.data.map(channel => {

@@ -33,7 +33,6 @@ module.exports = {
                 }
                 // get user data for all channel subscribers
                 let subbedUsers = await db.channels.getChannelUsers(channelId);
-                // console.log(subbedUsers);
                 // set subbed status to true on return object, and online status by reconciling with usersInChannel
                 let users = subbedUsers.map(user => {
                     user.subbed = true;
@@ -109,7 +108,6 @@ module.exports = {
         const { currentRoom } = socket.request.session;
         if (socket.request.session.user) {
             const { username } = socket.request.session.user;
-            // console.log(username, '- stopped typing -', currentRoom);
             socket.to(currentRoom).emit('stopped typing', username);
         }
     },
@@ -165,8 +163,7 @@ module.exports = {
             let channelResponse = await db.channels.checkChannelNameAndUrl(channel_name, channel_url);
             if (channelResponse[0])
                 return socket.emit('channel creation error', 'That channel name or its corresponding url is already in use');
-            // console.log('channel passed valication checks');
-            let response = await db.createChannel({ channel_name, creator_id, channel_description, channel_url })
+            let response = await db.channels.createChannel({ channel_name, creator_id, channel_description, channel_url })
             newChannel = response[0];
             return io.emit('new channel created', newChannel);
         } catch(err) {

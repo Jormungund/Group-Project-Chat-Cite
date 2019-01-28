@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { userLoggedOut, userEdit, createAlertMessage } from '../../../redux/reducer';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import './settings.css';
+import './Settings.css';
 
 class Settings extends Component {
     constructor(){
@@ -53,7 +53,7 @@ class Settings extends Component {
 
     render(){
         return (
-            <div className="settings-main">
+            <div className="Settings">
                 {this.props.isAuthenticated ? <div>
                     <div className="settings-header">
                         <h1 style={{color: 'white'}}>Settings</h1>

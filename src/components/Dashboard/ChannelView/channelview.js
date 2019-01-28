@@ -5,7 +5,7 @@ import InputBar from './InputBar';
 import ChannelViewMessage from './ChannelViewMessage';
 import { populateChannelUsers, clearUnseenMessages } from '../../../redux/reducer';
 import reconcileReactions from './reconcileReactions';
-import './channelview.css';
+import './ChannelView.css';
 
 class ChannelView extends Component {
     constructor(props) {
@@ -67,7 +67,6 @@ class ChannelView extends Component {
                         messages[messageIndex].reactions[reactionName] = messages[messageIndex].reactions[reactionName].filter(reactionUsername => reactionUsername !== username);
                         if (messages[messageIndex].reactions[reactionName].length === 0)
                             delete messages[messageIndex].reactions[reactionName];
-                        // console.log(messages[messageIndex].reactions);
                         if (Object.keys(messages[messageIndex].reactions).length === 0 && messages[messageIndex].reactions.constructor === Object)
                             delete messages[messageIndex].reactions;
                     }
@@ -112,10 +111,9 @@ class ChannelView extends Component {
             this.props.populateChannelUsers(channelUsers);
         });
         this.props.socket.on('stopped typing', username => {
-            console.log(username + ' stopped typing')
+
         });
         this.props.socket.on('is typing', username => {
-            console.log(username + ' is typing')
             let typing = this.state.typingUsers
             if (typing.indexOf(username) === -1) {
                 typing.push(username)
@@ -181,7 +179,6 @@ class ChannelView extends Component {
         }
     }
     componentWillUnmount() {
-        // console.log('channel view component unmounting');
         this.props.socket.emit('leave channel');
         this.props.socket.off('new message');
         this.props.socket.off('user joined channel');
@@ -201,7 +198,6 @@ class ChannelView extends Component {
             typingUsers: typing
         })
         this.props.socket.emit('stopped typing');
-        console.log('stopped typing')
     }
     isTyping = () => {
         this.setState({
@@ -216,7 +212,7 @@ class ChannelView extends Component {
             typing: false
         })
         this.props.socket.emit('stopped typing');
-        // console.log('stopped typing')
+
     }
 
     /*
@@ -276,8 +272,6 @@ class ChannelView extends Component {
             let messageRef = '';
             if (i === messages.length - 1)
                 messageRef = this.lastMessageRef;
-            // console.log(message.reactions);
-            // debugger;
             let messageReactionKey = 0;
             if (message.reactions) {
                 for (let key in message.reactions) {

@@ -46,7 +46,7 @@ module.exports = {
     async requestFriend(db, io, socket, connectedUsers, username) {
         try {
             const { id: myId, username: myUsername } = socket.request.session.user;
-            const response = await db.getUserByUsername(username);
+            const response = await db.user.getUserByUsername(username);
             const requestee = response[0];
             if (!requestee)
                 return socket.emit('confirm friend request', 'User not found.');

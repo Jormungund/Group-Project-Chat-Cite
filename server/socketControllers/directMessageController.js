@@ -6,7 +6,7 @@ module.exports = {
             if (username === socket.request.session.user.username)
                 return;
             const { id: myId, username: myUsername } = socket.request.session.user;
-            let dmPartner = await db.getUserByUsername(username);
+            let dmPartner = await db.user.getUserByUsername(username);
             if (!dmPartner[0])
                 return socket.emit('send initial dm response', -1);
             dmPartner = dmPartner[0];

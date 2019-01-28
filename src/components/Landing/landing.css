@@ -1,4 +1,4 @@
-.landingHeader {
+.Landing .landingHeader {
     width: 100%;
     height: 50px;
     background-color: gray;
@@ -8,14 +8,14 @@
     justify-content: space-between;
 }
 
-.LoginBar {
+.Landing .LoginBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 500px;
 }
 
-.landingBody {
+.Landing .landingBody {
     width: 100%;
     height: calc(100vh - 50px);
     display: flex;
@@ -25,14 +25,14 @@
     padding-top: 30px;
 }
 
-.divider {
+.Landing .divider {
     width: 5px;
     height: 65%;
     border-radius: 2.5px;
     background-color: darkgray;
 }
 
-.registrationForm {
+.Landing .registrationForm {
     height: 50%;
     width: 35%;
     display: flex;
@@ -41,7 +41,7 @@
     justify-content: center;
 }
 
-.whyRegister {
+.Landing .whyRegister {
     height: 65%;
     width: 35%;
     display: flex;
@@ -49,7 +49,7 @@
     justify-content: center
 }
 
-.sideways {
+.Landing .sideways {
     width: 100%;
     height: 100%;
     display: flex;
@@ -57,13 +57,13 @@
     justify-content: space-evenly;
 }
 
-.loginInputs {
+.Landing .loginInputs {
     width: 150px;
     height: 30px;
     border-radius: 7.5px;
     padding-left: 7.5px;
 }
 
-.loginButton {
+.Landing .loginButton {
     border-radius: 7.5px;
 }

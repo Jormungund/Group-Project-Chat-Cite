@@ -9,7 +9,7 @@
 
 .nav-channels {
     height: calc(100vh - 100px);
-    overflow: scroll;
+    overflow: auto;
 }
 
 .NavBar .channels-header {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import getDate from '../../DateFormat/dateStamp';
+import getDate from '../../../utils/dateStamp';
 
 class Message extends React.PureComponent {
     constructor(){
@@ -135,13 +135,11 @@ class Message extends React.PureComponent {
         for (var key in this.props.message.reactions){
             reactions.push([key])    
         }
-        // console.log(reactions)
         let userReactions = reactions.map((reaction,i) =>{
             return <div key={i} className="message-reactions">
                 <span>
                     <i className={`fas fa-${reaction}`} value={reaction} onClick={() => this.props.likeMessage(this.props.message.id, reaction[0])}></i>{this.props.message.reactions[reaction].length > 1 ? this.props.message.reactions[reaction].length:null}
                 </span>
-                {/* {console.log(this.props.message.reactions.getOwnPropertyNames,this.props.message.reactions[reaction].length)} */}
             </div>
         })
         

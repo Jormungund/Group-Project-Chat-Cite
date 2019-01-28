@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import getDate from '../../DateFormat/dateStamp';
+import getDate from '../../../utils/dateStamp';
 import { Link } from 'react-router-dom';
 
 class DirectMessageMessage extends PureComponent {

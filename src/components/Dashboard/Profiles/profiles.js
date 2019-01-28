@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './profiles.css'
+import './Profiles.css'
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -24,13 +24,12 @@ class Profile extends Component {
     getUser = () => {
         axios.get(`/api/profile/${this.props.match.params.id}`).then(response => {
             this.setState({profileInfo: response.data}) 
-            // console.log(this.state.profileInfo)
         })
     }
     
     render(){
         return (
-            <div className="shush">
+            <div className="Profiles">
                 {this.state.profileInfo.user && 
                 
                 <div className="mainProfile">
